@@ -1,0 +1,26 @@
+body {
+	background-image: url(http://northparkanglers.com/wp-content/uploads/IMG_5037.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+h1 {
+	text-align: center;
+	color: #FFCE97 ;
+}
+
+h3 {
+	text-align: center;
+	color: #FFCE97 ;
+}
+
+form {
+	text-align: center;
+}
+
+.spotitem {
+	border: 1px solid black;
+	text-align: center;
+	background-color: rgba(25,29,47,0.5);
+	color: #FFCE97;
+}
