@@ -1,8 +1,10 @@
 //allspots/api.darksky.net/forecast/a464f1a55a36979cd5db19fd4a1b80d0/39.7392,-104.9903
+require('dotenv').config();
 let db = require('./models')
 let Spot = require('./models/user')
 let request = require('request')
 let userSpot = require('./models/spot')
+let cors = require('cors')
 
 
 let bodyParser = require('body-parser');
