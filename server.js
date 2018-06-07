@@ -17,8 +17,8 @@ const User = require('./models/user')
 
 let app = express()
 const saltRounds = 10;
-const api = 'a464f1a55a36979cd5db19fd4a1b80d0'
-const googs = 'AIzaSyDrf7QKStYBgVqdgN_OSuoxQX26-TinwuE'
+
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('./public'))
@@ -154,7 +154,7 @@ app.put('/spots/:id', function(req,res){
 
 app.get('/weather', (req, res) => {
 		console.log('getting there')
-	request(`https://api.darksky.net/forecast/a464f1a55a36979cd5db19fd4a1b80d0/${39.7392},${-104.9903}`, (req, res) =>{
+	request(`https://api.darksky.net/forecast/${process.env.api}/${39.7392},${-104.9903}`, (req, res) =>{
 		let weather = JSON.parse(res.body);
 		console.log(weather.currently.temperature);
 		
@@ -165,7 +165,7 @@ app.get('/weather', (req, res) => {
 
 app.get('/location', (req, res) => {
 	console.log('got it!')
-	request('https://maps.googleapis.com/maps/api/geocode/json?address=Kortes+Dam,+CA&key=AIzaSyDrf7QKStYBgVqdgN_OSuoxQX26-TinwuE',(req, res) =>{
+	request(`https://maps.googleapis.com/maps/api/geocode/json?address=Kortes+Dam,+CA&key=${process.env.googs}`,(req, res) =>{
 //			console.log(res.body.geometry)
 		let geolocate = JSON.parse(res.body);
 		console.log(geolocate.results[0].geometry.location.lat)
