@@ -18,7 +18,7 @@ const User = require('./models/user')
 let app = express()
 const saltRounds = 10;
 
-
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('./public'))
