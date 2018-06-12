@@ -44,8 +44,8 @@ app.get('/allspots', function(req, res) {
 
 	  if (err) {console.log(err)}
 	
-	 else {res.render("index.ejs", {user: user});}
-//		 else res.json(user)
+//	 else {res.render("index.ejs", {user: user});}
+		 else res.json(user)
 	});
 });
 
