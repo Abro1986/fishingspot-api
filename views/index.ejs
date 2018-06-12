@@ -12,7 +12,7 @@
   <body>
   	<h1>Fishing For Solitude</h1>
 
-  	<form action="/spots" method="POST" class="spots">
+  	<form id='newfish' action="/spots" method="POST" class="spots">
   		<input type="text" placeholder="spot" name="name">
   		<input type="text" placeholder="description" name="description">
   		<input id="fish" type="text" placeholder="species" name="species">
@@ -21,7 +21,8 @@
 	<div id='spotlist'>
 		
 		<% for (i=0; i<user.spots.length; i++) { %>
-		<div class='spotitem'> Name: <%= user.spots[i].name %> <br> Description: <%= user.spots[i].description %> <br> Species: <%= user.spots[i].species %> <br> 
+		<div class='spotitem'> Name: <%= user.spots[i].name %> <br> Description: <%= user.spots[i].description %> <br> Species: <%= user.spots[i].species %> <br> Temperature: <%=
+    user.spots[i].weather %> <br> 
 			<button class="delete" type="button" name="button" data-id= <%= user.spots[i]._id %>>delete</button>
 			<button class="update" type="button" name="button" data-id= <%= user.spots[i]._id %>>update</button><br>
 	

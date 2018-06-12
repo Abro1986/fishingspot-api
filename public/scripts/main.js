@@ -7,6 +7,7 @@ $(document).ready(function(){
 	species = $('.fish').val()
 
 	$('#spotlist').on('click', '.delete', function(){
+		
 		console.log($(this).attr('data-id'));
 		$.ajax({
 			method: 'DELETE',
@@ -25,6 +26,16 @@ $(document).ready(function(){
 			data: {species: $('#fish').val()},
 			success: updateSuccess,
 			error: updateError
+
+		})
+	})
+
+	$('#newfish').on('submit', function() {
+		$.ajax({
+			method: 'GET',
+			url: '/allspots',
+			success: getSuccess,
+			error: getError
 
 		})
 	})
@@ -60,6 +71,10 @@ function updateError () {
 
 function weatherSuccess () {
 	console.log('hitting the api')
+}
+
+function getSuccess() {
+	location.reload();
 }
 
 

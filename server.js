@@ -41,14 +41,11 @@ app.get('/login', (req, res) =>{
 
 app.get('/allspots', function(req, res) {
 	Spot.findOne({}, function(err, user){
-		console.log(user.spots.id)
-//		console.log(user.spots[0])
-		
-//		console.log(req.body)
+
 	  if (err) {console.log(err)}
 	
-//	 else {res.render("index.ejs", {user: user});}
-		 else res.json(user)
+	 else {res.render("index.ejs", {user: user});}
+//		 else res.json(user)
 	});
 });
 
@@ -86,7 +83,9 @@ app.post('/login', (req, res) => {
 				if(result) {
 					console.log('logged in')
 					req.session.user = user
+					console.log(user)
 					res.redirect('/allspots');
+
 				}
 			});
 		}
@@ -99,22 +98,35 @@ app.post('/login', (req, res) => {
 
 
 app.post('/spots', function(req, res){
-//	console.log(req.body);
+	form = req.body
 	Spot.findOne({}, (err, user)=>{
-//		let spotModel = new userSpot();
-		user.spots.push(req.body)
-		user.save().then() 
-		console.log(user.spots)
-		console.log(user.spots.length);
-	
-	});
+		request(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.body.name},+CA&key=AIzaSyDrf7QKStYBgVqdgN_OSuoxQX26-TinwuE`,(req, res) =>{			
+			let geolocate = JSON.parse(res.body);
+			let lat = geolocate.results[0].geometry.location.lat
+			let lng = geolocate.results[0].geometry.location.lng		
+		request(`https://api.darksky.net/forecast/a464f1a55a36979cd5db19fd4a1b80d0/${lat},${lng}`, (req, res) =>{
+			let weather = JSON.parse(res.body);
+		spotWeather = weather.currently.temperature
+		
+		
+		newSpot = {
+			name: form.name,
+			description: form.description,
+			species: form.species,
+			weather: spotWeather
+		}
 
-	// let newSpot = db.Spot(req.body);
-	// Spot.create(newSpot, function(err, newSpot) {
-	// 	if (err) {console.log(err)}
-	// });
-//	console.log(db.Spot(req.body));
-	res.json();
+		user.spots.push(newSpot)
+		user.save().then()
+
+		
+		});
+	});
+	res.json(user);	
+});
+
+
+	
 });
 
 app.delete('/spots/:id', function(req, res) {
@@ -165,8 +177,8 @@ app.get('/weather', (req, res) => {
 
 app.get('/location', (req, res) => {
 	console.log('got it!')
-	request(`https://maps.googleapis.com/maps/api/geocode/json?address=Kortes+Dam,+CA&key=${process.env.googs}`,(req, res) =>{
-//			console.log(res.body.geometry)
+	request(`https://maps.googleapis.com/maps/api/geocode/json?address=Kortes+Dam,+CA&key=AIzaSyDrf7QKStYBgVqdgN_OSuoxQX26-TinwuE`,(req, res) =>{
+			console.log(res.body.geometry)
 		let geolocate = JSON.parse(res.body);
 		console.log(geolocate.results[0].geometry.location.lat)
 		console.log(geolocate.results[0].geometry.location.lng)
@@ -194,22 +206,3 @@ app.set('port', process.env.PORT || 3001)
 
 
 
-// app.put('/spots/:id', function(req,res){
-//     let name = req.body.name;
-//     let description = req.body.description;
-//     let species = req.body.species;
-//     console.log(req.body)
-//     Spot.findOneAndUpdate(
-//         {_id: req.params.id}, 
-//         {$set:{species: species}}, 
-//         {new: true}, 
-//         function (err, spots) {
-//             if (err) {
-//                 console.log(err, "Something wrong when updating data!");
-//             } else {
-//                 console.log('updated!' + req.body.species);
-                
-//                 res.render("index.ejs", {spots: spots});
-//         }
-//     })
-// });  

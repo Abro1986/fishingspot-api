@@ -5,6 +5,7 @@ let SpotSchema = new Schema({
 	name: String,
 	description: String,
 	species: String, default: "",
+	weather: Number,
 })
 
 let UserSchema = new Schema({
