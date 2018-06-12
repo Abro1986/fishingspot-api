@@ -1,4 +1,4 @@
-//allspots/api.darksky.net/forecast/a464f1a55a36979cd5db19fd4a1b80d0/39.7392,-104.9903
+
 require('dotenv').config();
 let db = require('./models')
 let Spot = require('./models/user')
@@ -177,7 +177,7 @@ app.get('/weather', (req, res) => {
 
 app.get('/location', (req, res) => {
 	console.log('got it!')
-	request(`https://maps.googleapis.com/maps/api/geocode/json?address=Kortes+Dam,+CA&key=AIzaSyDrf7QKStYBgVqdgN_OSuoxQX26-TinwuE`,(req, res) =>{
+	request(`https://maps.googleapis.com/maps/api/geocode/json?address=Kortes+Dam,+,(req, res) =>{
 			console.log(res.body.geometry)
 		let geolocate = JSON.parse(res.body);
 		console.log(geolocate.results[0].geometry.location.lat)
