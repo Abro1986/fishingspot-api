@@ -100,11 +100,11 @@ app.post('/login', (req, res) => {
 app.post('/spots', function(req, res){
 	form = req.body
 	Spot.findOne({}, (err, user)=>{
-		request(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.body.name},+CA&key=AIzaSyDrf7QKStYBgVqdgN_OSuoxQX26-TinwuE`,(req, res) =>{			
+		request(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.body.name},+`,(req, res) =>{			
 			let geolocate = JSON.parse(res.body);
 			let lat = geolocate.results[0].geometry.location.lat
 			let lng = geolocate.results[0].geometry.location.lng		
-		request(`https://api.darksky.net/forecast/a464f1a55a36979cd5db19fd4a1b80d0/${lat},${lng}`, (req, res) =>{
+		request(`https://api.darksky.net/forecast//${lat},${lng}`, (req, res) =>{
 			let weather = JSON.parse(res.body);
 		spotWeather = weather.currently.temperature
 		
